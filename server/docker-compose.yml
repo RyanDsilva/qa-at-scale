@@ -1,0 +1,23 @@
+version: "3"
+services:
+  haystack-api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: "deepset/haystack-cpu:latest"
+    ports:
+      - 8000:8000
+    environment:
+      - DB_HOST=elasticsearch
+      - USE_GPU=False
+      - READER_MODEL_PATH=deepset/roberta-base-squad2
+    restart: always
+    depends_on:
+      - elasticsearch
+    command: "/bin/bash -c 'sleep 15 && gunicorn main:app -w 4 -k uvicorn.workers.UvicornWorker'"
+  elasticsearch:
+    image: "elasticsearch:7.6.1"
+    ports:
+      - 9200:9200
+    environment:
+      - discovery.type=single-node
