@@ -1,4 +1,4 @@
-FROM python:3.7.4-stretch
+FROM deepset/haystack-cpu:latest
 
 WORKDIR /home/user
 

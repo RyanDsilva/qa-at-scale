@@ -1,6 +1,6 @@
 version: "3"
 services:
-  haystack-api:
+  qa-api:
     build:
       context: .
       dockerfile: Dockerfile
