@@ -15,6 +15,7 @@ class QAPipeline:
         self.reader = FARMReader(
             model_name_or_path="deepset/roberta-base-squad2", use_gpu=False)
         self.finder = Finder(self.reader, self.retriever)
+        print('Ready')
 
     def add_to_datastore_from_remote(self, data_url):
         return {'status': 'Not Implemented'}
@@ -22,7 +23,7 @@ class QAPipeline:
     def add_to_datastore_local(self, data_path):
         json_data = read_json_data(data_path)
         es_data = create_data_dicts(json_data)
-        self.document_store.write(es_data)
+        self.document_store.write_documents(es_data)
         return {'status': 'Added To Datastore'}
 
     def answer(self, question, top_k_options=10, top_k_answers=3):
